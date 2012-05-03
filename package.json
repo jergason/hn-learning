@@ -1,0 +1,24 @@
+{
+  "author": "Jamison Dance <jergason@gmail.com",
+  "description": "A simple tool to recommend articles appeal to me on Hacker News.",
+  "name": "hn-learning",
+  "version": "0.0.0",
+  "scripts": {
+    "test": "node_modules/.bin/mocha tests/*"
+  },
+  "dependencies": {
+    "request": "2.9.x",
+    "jsdom": "0.2.x",
+    "moment": "1.6.x",
+    "async": "0.1.x",
+    "mongoose": "2.6.3",
+    "credulous": "0.0.x"
+  },
+  "devDependencies": {
+    "mocha": "1.0.x"
+  },
+  "optionalDependencies": {},
+  "engines": {
+    "node": ">=0.4.1"
+  }
+}
