@@ -12,6 +12,7 @@
     "moment": "1.6.x",
     "async": "0.1.x",
     "mongoose": "2.6.3",
+    "jake": "0.2.x",
     "credulous": "0.0.x"
   },
   "devDependencies": {
