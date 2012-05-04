@@ -31,7 +31,7 @@
     var getHNArchivePosts = require('./lib/getOldTop')
       , addPostsToDb = require('./lib/addPostsToDb')
       ;
-      getOldPosts(function (err, posts) {
+      getHNArchivePosts(function (err, posts) {
         addPostsToDb(posts, function(er1) {
           console.log('done!');
           complete();
