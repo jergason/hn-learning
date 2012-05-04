@@ -25,6 +25,90 @@
     });
   }, {async: true});
 
+  desc('Mark all posts matching the field and word as unliked. Use as dislike[url,techcrunch] or dislike[title,TSA]');
+  task('dislike', function(field, word) {
+    var mongoose = require('mongoose')
+      , async = require('async')
+      , config = require('./config')
+      , db = mongoose.createConnection(config.db)
+      , Post = require('./lib/Post')(db)
+      , regexp
+      , count = 0
+      , searchObj = {}
+      ;
+
+
+    function dislike(post, done) {
+      if (post.rated) {
+        done();
+        return;
+      }
+
+
+      post.liked = false;
+      post.rated = true;
+      post.save(function () {
+        count++;
+        done();
+      });
+    }
+
+    function doneWithPosts() {
+      console.log('disliked ' + count + ' posts');
+      db.close();
+      complete();
+    }
+
+    regexp = new RegExp(word);
+    searchObj[field] = regexp;
+    Post.find(searchObj, function (err, posts) {
+      async.forEach(posts, dislike, doneWithPosts);
+    });
+
+  }, {async: true});
+
+  desc('Mark all posts matching the field and word as liked. Use as like[url,techcrunch] or like[title,TSA]');
+  task('like', function(field, word) {
+    var mongoose = require('mongoose')
+      , async = require('async')
+      , config = require('./config')
+      , db = mongoose.createConnection(config.db)
+      , Post = require('./lib/Post')(db)
+      , regexp
+      , count = 0
+      , searchObj = {}
+      ;
+
+
+    function like(post, done) {
+      if (post.rated) {
+        done();
+        return;
+      }
+
+
+      post.liked = true;
+      post.rated = true;
+      post.save(function () {
+        count++;
+        done();
+      });
+    }
+
+    function doneWithPosts() {
+      console.log('liked ' + count + ' posts');
+      db.close();
+      complete();
+    }
+
+    regexp = new RegExp(word);
+    searchObj[field] = regexp;
+    Post.find(searchObj, function (err, posts) {
+      async.forEach(posts, like, doneWithPosts);
+    });
+
+  }, {async: true});
+
 
   desc('Add the past few years of posts from HNArchive to the DB if they are not already there.');
   task('load_from_hnarchive', function () {
