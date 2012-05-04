@@ -38,4 +38,30 @@
         });
       });
   }, {async: true});
+
+  desc('Reset the random numbers on each post.');
+  task('randomize_posts', function () {
+    var mongoose = require('mongoose')
+      , async = require('async')
+      , config = require('./config')
+      , db = mongoose.createConnection(config.db)
+      , Post = require('./lib/Post')(db)
+
+    function doneWithAsync(err) {
+      console.log('done!');
+      db.close();
+      complete();
+    }
+
+    function asyncRerandomizePost(post, done) {
+      post.random = Math.random();
+      post.save(function () {
+        done();
+      });
+    }
+
+    Post.find({}, function (err, posts) {
+      async.forEach(posts, asyncRerandomizePost, doneWithAsync);
+    });
+  }, {async: true});
 }());
