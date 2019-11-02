@@ -11,7 +11,7 @@
     "jsdom": "0.2.x",
     "moment": "1.6.x",
     "async": "0.1.x",
-    "mongoose": "2.6.3",
+    "mongoose": "5.7.7",
     "jake": "0.2.x",
     "credulous": "0.0.x"
   },
